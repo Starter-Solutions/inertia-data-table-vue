@@ -1,1 +1,3 @@
-console.log('Hello, Inertia Data Table Vue!');  
+export * from "./composables/useLaravelPagination";
+export * from "./plugin";
+export type * from "./types/pagination"

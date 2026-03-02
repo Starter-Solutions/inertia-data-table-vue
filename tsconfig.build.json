@@ -1,0 +1,13 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "declaration": true,
+        "emitDeclarationOnly": false,
+        "declarationMap": false,
+        "outDir": "dist",
+        "noEmit": false
+    },
+    "include": ["src", "env.d.ts"]
+}
