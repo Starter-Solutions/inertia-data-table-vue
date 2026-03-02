@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "declaration": true,
+        "emitDeclarationOnly": false,
+        "declarationMap": false,
+        "outDir": "dist",
+        "noEmit": false
+    },
+    "include": ["src", "env.d.ts"]
+}
