@@ -2,6 +2,7 @@
     "name": "@starter-solutions/inertia-data-table-vue",
     "version": "0.1.4",
     "license": "MIT",
+    "description": "Vue 3 + Inertia.js data table utilities with Laravel backend integration.",
     "type": "module",
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
@@ -16,6 +17,28 @@
             "types": "./dist/index.d.ts"
         }
     },
+    "author": {
+        "name": "Luca Hoffmann",
+        "url": "https://github.com/HoffmannLuca"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/starter-solutions/inertia-data-table-vue.git"
+    },
+    "homepage": "https://github.com/starter-solutions/inertia-data-table-vue#readme",
+    "bugs": {
+        "url": "https://github.com/starter-solutions/inertia-data-table/issues"
+    },
+    "keywords": [
+        "laravel",
+        "inertia",
+        "vue",
+        "vue3",
+        "typescript",
+        "data-table",
+        "pagination",
+        "sorting"
+    ],
     "scripts": {
         "typecheck": "tsc -p tsconfig.build.json --noEmit",
         "build": "vite build",
