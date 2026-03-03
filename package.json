@@ -19,7 +19,10 @@
     "scripts": {
         "typecheck": "tsc -p tsconfig.build.json --noEmit",
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "git-patch": "npm version patch && git push --follow-tags",
+        "git-minor": "npm version minor && git push --follow-tags",
+        "git-major": "npm version major && git push --follow-tags"
     },
     "peerDependencies": {
         "@inertiajs/vue3": "^2.0.0",
