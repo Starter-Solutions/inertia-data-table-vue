@@ -5,7 +5,7 @@ import {
     PaginatedFlat,
     PaginatedRequest,
     PaginatedResource,
-} from '../types/pagination';
+} from '@/types/pagination';
 
 export const useLaravelPagination = <T>(
     paginated?: MaybeRefOrGetter<Paginated<T> | null | undefined>,
@@ -13,14 +13,6 @@ export const useLaravelPagination = <T>(
     const normalized = computed(() => normalizePagination(toValue(paginated)));
     const data = computed(() => normalized.value.data);
     const pagination = computed(() => normalized.value.pagination);
-
-    watch(
-        () => normalized.value,
-        (newVal) => {
-            console.log("Pagination updated:", newVal);
-        },
-        { immediate: true, deep: true },
-    );
 
     const getPaginatedRequest = (
         override: Partial<PaginatedRequest> = {},
@@ -57,7 +49,7 @@ export const normalizePagination = <T>(
     };
 };
 
-const isResource = (p: Paginated<unknown>): p is PaginatedResource<unknown> =>
+export const isResource = (p: Paginated<unknown>): p is PaginatedResource<unknown> =>
     "meta" in p && typeof p.meta === "object" && p.meta !== null;
 
 export const getPaginationMeta = (
