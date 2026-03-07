@@ -5,7 +5,7 @@ import {
     InertiaDataTableSettings,
     InertiaDataTableSharedProps,
     InertiaDataTableStateRoutes,
-} from "@/types/config";
+} from "@/types";
 import { usePage } from "@inertiajs/vue3";
 import { computed, MaybeRefOrGetter, toValue } from "vue";
 
