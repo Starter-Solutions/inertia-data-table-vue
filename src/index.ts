@@ -1,3 +1,3 @@
-export * from "./composables/useLaravelPagination";
+export * from "./composables";
 export * from "./plugin";
-export type * from "./types/pagination"
+export type * from "./types";
