@@ -37,7 +37,7 @@ export const useDataTable = <T>(
 
         if (settings.value.useUrlQuery) {
             router.reload({
-                only: [settings.value.pagePropsKey],
+                only: settings.value.reloadOnly,
                 data: { tableKey: settings.value.tableKey, ...request },
             });
         } else {
@@ -45,12 +45,12 @@ export const useDataTable = <T>(
                 stateRoutes.value.set,
                 {
                     tableKey: settings.value.tableKey,
-                    data: { ...request },
+                    data: request,
                 },
                 {
                     preserveState: true,
                     preserveScroll: true,
-                    only: [settings.value.pagePropsKey],
+                    only: settings.value.reloadOnly,
                 },
             );
         }

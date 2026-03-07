@@ -17,10 +17,18 @@ export const useInertiaDataTableConfig = (
 
     const settings = computed<InertiaDataTableSettings>(() => {
         const _options = toValue(options);
+        const _tableKey = toValue(tableKey);
+        const _pagePropsKey = toValue(_options?.pagePropsKey) ?? _tableKey;
+        const _useUrlQuery = toValue(_options?.useUrlQuery) ?? false;
+        const _reloadOnly = toValue(_options?.reloadOnly)
+            ? [_pagePropsKey, ...toValue(_options?.reloadOnly)!]
+            : [_pagePropsKey];
+
         return {
-            tableKey: toValue(tableKey),
-            pagePropsKey: toValue(_options?.pagePropsKey) ?? toValue(tableKey),
-            useUrlQuery: toValue(_options?.useUrlQuery) ?? false,
+            tableKey: _tableKey,
+            pagePropsKey: _pagePropsKey,
+            useUrlQuery: _useUrlQuery,
+            reloadOnly: _reloadOnly,
         };
     });
 
