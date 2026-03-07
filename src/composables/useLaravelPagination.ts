@@ -1,11 +1,11 @@
-import { computed, MaybeRefOrGetter, toValue, watch } from "vue";
+import { computed, MaybeRefOrGetter, toValue } from "vue";
 import {
     NormalizedPagination,
     Paginated,
     PaginatedFlat,
     PaginatedRequest,
     PaginatedResource,
-} from "@/types/pagination";
+} from "@/types";
 
 export const useLaravelPagination = <T>(
     paginated?: MaybeRefOrGetter<Paginated<T> | null | undefined>,
