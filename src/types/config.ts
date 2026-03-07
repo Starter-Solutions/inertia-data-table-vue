@@ -41,10 +41,15 @@ export type InertiaDataTableOptions = {
      * The key in which the paginated data is stored in the page props. Defaults to the tableKey if not provided.
      */
     pagePropsKey?: MaybeRefOrGetter<string>;
+    /**
+     * Defines page props that should be reloaded along with the table data.
+     */
+    reloadOnly?: MaybeRefOrGetter<Array<string>>;
 };
 
 export type InertiaDataTableSettings = {
     tableKey: string;
     pagePropsKey: string;
     useUrlQuery: boolean;
+    reloadOnly: Array<string>;
 };
