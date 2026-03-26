@@ -1,6 +1,6 @@
 import { InertiaDataTableOptions, Paginated, PaginatedRequest } from "@/types";
 import { router, usePage } from "@inertiajs/vue3";
-import { computed, MaybeRefOrGetter, onBeforeUnmount } from "vue";
+import { computed, MaybeRefOrGetter, onBeforeUnmount, reactive } from "vue";
 import { useInertiaDataTableConfig } from "./useInertiaDataTableConfig";
 import { useLaravelPagination } from "./useLaravelPagination";
 
@@ -32,20 +32,25 @@ export const useDataTable = <T>(
     const { data, pagination, getPaginatedRequest, validPage } =
         useLaravelPagination(paginatedData);
 
-    const reloadData = (request?: Partial<PaginatedRequest>) => {
-        request = getPaginatedRequest(request);
+    const reload = (pagination?: Partial<PaginatedRequest>) => {
+        pagination = getPaginatedRequest(pagination);
 
         if (settings.value.useUrlQuery) {
             router.reload({
                 only: settings.value.reloadOnly,
-                data: { tableKey: settings.value.tableKey, ...request },
+                data: {
+                    tableKey: settings.value.tableKey,
+                    filter: filter,
+                    ...pagination,
+                },
             });
         } else {
             router.post(
                 stateRoutes.value.set,
                 {
                     tableKey: settings.value.tableKey,
-                    data: request,
+                    filter: filter,
+                    pagination: pagination,
                 },
                 {
                     preserveState: true,
@@ -56,6 +61,7 @@ export const useDataTable = <T>(
         }
     };
 
+    // Pagination
     const firstPage = () => {
         goToPage(1);
     };
@@ -78,11 +84,11 @@ export const useDataTable = <T>(
             return;
         }
 
-        reloadData(getPaginatedRequest({ page: newPage }));
+        reload({ page: newPage });
     };
 
     const itemsPerPage = (perPage: number) => {
-        reloadData(getPaginatedRequest({ per_page: perPage, page: 1 }));
+        reload({ per_page: perPage, page: 1 });
     };
 
     const sortBy = (sort_by: string, descending?: boolean) => {
@@ -91,13 +97,39 @@ export const useDataTable = <T>(
                 ? !pagination.value.descending
                 : false;
 
-        reloadData(getPaginatedRequest({ sort_by, descending: newDescending }));
+        reload({ sort_by, descending: newDescending });
+    };
+
+    // Filter
+    const filter = reactive<Record<string, any>>({});
+
+    const setFilter = (key: string, value: any) => {
+        filter[key] = value;
+        reload();
+    };
+
+    const setFilters = (filters: Array<{ key: string; value: any }>) => {
+        filters.forEach(({ key, value }) => {
+            filter[key] = value;
+        });
+        reload();
+    };
+
+    const removeFilter = (key: string) => {
+        delete filter[key];
+        reload();
+    };
+
+    const resetFilters = () => {
+        Object.keys(filter).forEach((key) => delete filter[key]);
+        reload();
     };
 
     return {
         data,
+        reload,
+
         pagination,
-        reloadData,
         firstPage,
         previousPage,
         nextPage,
@@ -105,5 +137,11 @@ export const useDataTable = <T>(
         goToPage,
         itemsPerPage,
         sortBy,
+
+        filter,
+        setFilter,
+        setFilters,
+        removeFilter,
+        resetFilters,
     };
 };
