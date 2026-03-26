@@ -105,24 +105,24 @@ export const useDataTable = <T>(
 
     const setFilter = (key: string, value: any) => {
         filter[key] = value;
-        reload();
+        reload({ page: 1 });
     };
 
     const setFilters = (filters: Array<{ key: string; value: any }>) => {
         filters.forEach(({ key, value }) => {
             filter[key] = value;
         });
-        reload();
+        reload({ page: 1 });
     };
 
     const removeFilter = (key: string) => {
         delete filter[key];
-        reload();
+        reload({ page: 1 });
     };
 
     const resetFilters = () => {
         Object.keys(filter).forEach((key) => delete filter[key]);
-        reload();
+        reload({ page: 1 });
     };
 
     return {
