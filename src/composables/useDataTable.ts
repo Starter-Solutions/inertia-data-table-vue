@@ -22,7 +22,7 @@ export const useDataTable = <T>(
     });
 
     const page = usePage<{
-        [settings.value.pagePropsKey]: Paginated<T>;
+        [settings.value.pagePropsKey]: Paginated<T> & { additional: Record<string, any> };
     }>();
 
     const paginatedData = computed(
@@ -125,6 +125,23 @@ export const useDataTable = <T>(
         reload({ page: 1 });
     };
 
+    // Additional
+    const additional = computed<Record<string, any>>(() => page.props[settings.value.pagePropsKey].additional );
+
+    const getAdditional = (
+        key: string,
+        defaultValue: any = undefined
+    ): any => {
+        const value = key
+            .split('.')
+            .reduce(
+                (value, segment) => value?.[segment],
+                additional.value
+            );
+
+        return value ?? defaultValue;
+    };
+
     return {
         data,
         reload,
@@ -143,5 +160,8 @@ export const useDataTable = <T>(
         setFilters,
         removeFilter,
         resetFilters,
+
+        additional,
+        getAdditional,
     };
 };
