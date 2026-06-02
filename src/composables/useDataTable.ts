@@ -22,7 +22,7 @@ export const useDataTable = <T>(
     });
 
     const page = usePage<{
-        [settings.value.pagePropsKey]: Paginated<T> & { additional: Array<any> };
+        [settings.value.pagePropsKey]: Paginated<T> & { additional: Record<string, any> };
     }>();
 
     const paginatedData = computed(
