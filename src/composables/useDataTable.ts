@@ -8,7 +8,7 @@ export const useDataTable = <T>(
     tableKey: MaybeRefOrGetter<string>,
     options?: MaybeRefOrGetter<InertiaDataTableOptions>,
 ) => {
-    const { stateRoutes, settings } = useInertiaDataTableConfig(
+    const { settings, stateRoutes, queryParams } = useInertiaDataTableConfig(
         tableKey,
         options,
     );
@@ -39,9 +39,12 @@ export const useDataTable = <T>(
             router.reload({
                 only: settings.value.reloadOnly,
                 data: {
-                    tableKey: settings.value.tableKey,
-                    filter: filter,
-                    ...pagination,
+                    [queryParams.value.tableKey]: settings.value.tableKey,
+                    [queryParams.value.filter]: filter,
+                    [queryParams.value.pageName]: pagination.page,
+                    [queryParams.value.perPage]: pagination.per_page,
+                    [queryParams.value.sortBy]: pagination.sort_by,
+                    [queryParams.value.descending]: pagination.descending,
                 },
             });
         } else {

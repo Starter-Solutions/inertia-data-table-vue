@@ -14,6 +14,7 @@ export type InertiaDataTableQueryParams = {
     sortBy: string;
     descending: string;
     pageName: string;
+    filter: string;
 };
 
 export type InertiaDataTableDefaults = {
