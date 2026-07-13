@@ -1,6 +1,6 @@
 import { InertiaDataTableOptions, Paginated, PaginatedRequest } from "@/types";
 import { router, usePage } from "@inertiajs/vue3";
-import { computed, MaybeRefOrGetter, onBeforeUnmount, reactive } from "vue";
+import { computed, MaybeRefOrGetter, onBeforeUnmount, reactive, watch } from "vue";
 import { useInertiaDataTableConfig } from "./useInertiaDataTableConfig";
 import { useLaravelPagination } from "./useLaravelPagination";
 
@@ -22,11 +22,14 @@ export const useDataTable = <T>(
     });
 
     const page = usePage<{
-        [settings.value.pagePropsKey]: Paginated<T> & { additional: Record<string, any> };
+        [settings.value.pagePropsKey]: Paginated<T> & { 
+            filter: Record<string, any>;
+            additional: Record<string, any>;
+        };
     }>();
 
     const paginatedData = computed(
-        () => page.props[settings.value.pagePropsKey] ?? null,
+        () => page.props?.[settings.value.pagePropsKey] ?? null,
     );
 
     const { data, pagination, getPaginatedRequest, validPage } =
@@ -101,7 +104,15 @@ export const useDataTable = <T>(
     };
 
     // Filter
-    const filter = reactive<Record<string, any>>({});
+    const filter = reactive<Record<string, any>>(paginatedData.value?.filter ?? {});
+
+    watch(
+        () => paginatedData.value?.filter,
+        (newFilter) => {
+            Object.keys(filter).forEach((key) => delete filter[key]);
+            Object.assign(filter, newFilter ?? {});
+        },
+    );
 
     const setFilter = (key: string, value: any) => {
         filter[key] = value;
@@ -126,7 +137,7 @@ export const useDataTable = <T>(
     };
 
     // Additional
-    const additional = computed<Record<string, any>>(() => page.props[settings.value.pagePropsKey].additional );
+    const additional = computed<Record<string, any>>(() => paginatedData.value.additional ?? {});
 
     const getAdditional = (
         key: string,

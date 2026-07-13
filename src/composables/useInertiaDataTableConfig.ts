@@ -33,15 +33,32 @@ export const useInertiaDataTableConfig = (
     });
 
     const stateRoutes = computed<InertiaDataTableStateRoutes>(
-        () => page.props.inertiaDataTable.stateRoutes,
+        () =>
+            page.props?.inertiaDataTable?.stateRoutes ?? {
+                set: "",
+                drop: "",
+                dropAll: "",
+            },
     );
 
     const queryParams = computed<InertiaDataTableQueryParams>(
-        () => page.props.inertiaDataTable.queryParams,
+        () =>
+            page.props?.inertiaDataTable?.queryParams ?? {
+                tableKey: "tableKey",
+                perPage: "per_page",
+                sortBy: "sort_by",
+                descending: "descending",
+                pageName: "page",
+                filter: "filter",
+            },
     );
 
     const defaults = computed<InertiaDataTableDefaults>(
-        () => page.props.inertiaDataTable.defaults,
+        () =>
+            page.props?.inertiaDataTable?.defaults ?? {
+                perPage: 15,
+                sortBy: "id",
+            },
     );
 
     return {
