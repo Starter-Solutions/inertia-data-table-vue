@@ -1,6 +1,6 @@
 {
     "name": "@starter-solutions/inertia-data-table-vue",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "license": "MIT",
     "description": "Vue 3 + Inertia.js data table utilities with Laravel backend integration.",
     "type": "module",
