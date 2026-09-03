@@ -21,6 +21,7 @@ export type InertiaDataTableDefaults = {
     // Default values for the query parameters, used if not provided in the request
     perPage: number;
     sortBy: string;
+    descending: boolean;
 };
 
 export type InertiaDataTableSharedProps = {

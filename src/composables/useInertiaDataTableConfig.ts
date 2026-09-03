@@ -58,6 +58,7 @@ export const useInertiaDataTableConfig = (
             page.props?.inertiaDataTable?.defaults ?? {
                 perPage: 15,
                 sortBy: "id",
+                descending: true,
             },
     );
 
