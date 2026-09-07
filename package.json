@@ -41,6 +41,7 @@
     ],
     "scripts": {
         "typecheck": "tsc -p tsconfig.build.json --noEmit",
+        "test": "vitest run",
         "build": "vite build",
         "dev": "vite",
         "git-patch": "npm version patch && git push --follow-tags",
@@ -57,7 +58,8 @@
         "@vitejs/plugin-vue": "^5.0.0",
         "typescript": "^5.0.0",
         "vite": "^5.0.0",
-        "vue": "^3.3.0",
-        "vite-plugin-dts": "^3.0.0"
+        "vite-plugin-dts": "^3.0.0",
+        "vitest": "^1.6.1",
+        "vue": "^3.3.0"
     }
 }

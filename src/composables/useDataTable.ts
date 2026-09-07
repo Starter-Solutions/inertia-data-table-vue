@@ -22,10 +22,10 @@ export const useDataTable = <T>(
     });
 
     const page = usePage<{
-        [settings.value.pagePropsKey]: Paginated<T> & { 
-            filter: Record<string, any>;
-            additional: Record<string, any>;
-        };
+        [settings.value.pagePropsKey]?: (Paginated<T> & {
+            filter?: Record<string, any>;
+            additional?: Record<string, any>;
+        }) | null;
     }>();
 
     const paginatedData = computed(
@@ -137,7 +137,9 @@ export const useDataTable = <T>(
     };
 
     // Additional
-    const additional = computed<Record<string, any>>(() => paginatedData.value.additional ?? {});
+    const additional = computed<Record<string, any>>(
+        () => paginatedData.value?.additional ?? {},
+    );
 
     const getAdditional = (
         key: string,
