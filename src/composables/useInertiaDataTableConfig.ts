@@ -20,6 +20,7 @@ export const useInertiaDataTableConfig = (
         const _tableKey = toValue(tableKey);
         const _pagePropsKey = toValue(_options?.pagePropsKey) ?? _tableKey;
         const _useUrlQuery = toValue(_options?.useUrlQuery) ?? false;
+        const _replaceHistory = toValue(_options?.replaceHistory) ?? false;
         const _reloadOnly = toValue(_options?.reloadOnly)
             ? [_pagePropsKey, ...toValue(_options?.reloadOnly)!]
             : [_pagePropsKey];
@@ -28,6 +29,7 @@ export const useInertiaDataTableConfig = (
             tableKey: _tableKey,
             pagePropsKey: _pagePropsKey,
             useUrlQuery: _useUrlQuery,
+            replaceHistory: _replaceHistory,
             reloadOnly: _reloadOnly,
         };
     });

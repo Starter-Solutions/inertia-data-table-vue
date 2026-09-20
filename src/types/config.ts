@@ -40,6 +40,10 @@ export type InertiaDataTableOptions = {
      */
     useUrlQuery?: MaybeRefOrGetter<boolean>;
     /**
+     * Whether table state changes should replace the current browser history entry. Defaults to false.
+     */
+    replaceHistory?: MaybeRefOrGetter<boolean>;
+    /**
      * The key in which the paginated data is stored in the page props. Defaults to the tableKey if not provided.
      */
     pagePropsKey?: MaybeRefOrGetter<string>;
@@ -53,5 +57,6 @@ export type InertiaDataTableSettings = {
     tableKey: string;
     pagePropsKey: string;
     useUrlQuery: boolean;
+    replaceHistory: boolean;
     reloadOnly: Array<string>;
 };

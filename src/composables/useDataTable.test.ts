@@ -50,3 +50,51 @@ describe("useDataTable additional data", () => {
         expect(table.getAdditional("filters.statuses", [])).toEqual(["active"]);
     });
 });
+
+describe("useDataTable history", () => {
+    beforeEach(() => {
+        inertia.props = {};
+        vi.clearAllMocks();
+    });
+
+    it("does not replace browser history by default for URL query state", () => {
+        const table = useDataTable("users", { useUrlQuery: true });
+
+        table.reload();
+
+        expect(inertia.reload).toHaveBeenCalledWith(
+            expect.objectContaining({ replace: false }),
+        );
+    });
+
+    it("can replace browser history for URL query state", () => {
+        const table = useDataTable("users", {
+            useUrlQuery: true,
+            replaceHistory: true,
+        });
+
+        table.reload();
+
+        expect(inertia.reload).toHaveBeenCalledWith(
+            expect.objectContaining({ replace: true }),
+        );
+    });
+
+    it("can replace browser history for session state", () => {
+        inertia.props = {
+            inertiaDataTable: {
+                stateRoutes: { set: "/set", drop: "/drop", dropAll: "/drop-all" },
+            },
+        };
+
+        const table = useDataTable("users", { replaceHistory: true });
+
+        table.reload();
+
+        expect(inertia.post).toHaveBeenCalledWith(
+            "/set",
+            expect.any(Object),
+            expect.objectContaining({ replace: true }),
+        );
+    });
+});

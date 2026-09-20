@@ -41,6 +41,7 @@ export const useDataTable = <T>(
         if (settings.value.useUrlQuery) {
             router.reload({
                 only: settings.value.reloadOnly,
+                replace: settings.value.replaceHistory,
                 data: {
                     tableKey: settings.value.tableKey,
                     filter: filter,
@@ -58,6 +59,7 @@ export const useDataTable = <T>(
                 {
                     preserveState: true,
                     preserveScroll: true,
+                    replace: settings.value.replaceHistory,
                     only: settings.value.reloadOnly,
                 },
             );
