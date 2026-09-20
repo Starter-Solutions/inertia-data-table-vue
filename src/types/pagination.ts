@@ -20,7 +20,7 @@ export type NormalizedPagination = {
     next_page_url: string | null;
     prev_page_url: string | null;
     //custom
-    sort_by?: string;
+    sort_by?: string | null;
     descending?: boolean;
 };
 
@@ -51,6 +51,6 @@ export interface PaginatedRequest {
     page: number;
     per_page: number;
     //custom
-    sort_by: string;
+    sort_by: string | null;
     descending: boolean;
 }

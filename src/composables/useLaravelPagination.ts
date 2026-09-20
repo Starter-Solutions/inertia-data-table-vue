@@ -22,7 +22,7 @@ export const useLaravelPagination = <T>(
         return {
             page: override.page ?? pagination.value.current_page,
             per_page: override.per_page ?? pagination.value.per_page,
-            sort_by: override.sort_by ?? pagination.value.sort_by!,
+            sort_by: override.sort_by ?? pagination.value.sort_by,
             descending: override.descending ?? pagination.value.descending!,
         };
     };
@@ -97,7 +97,7 @@ export const getPaginationMeta = (
             next_page_url: paginated.links.next,
             prev_page_url: paginated.links.prev,
             //custom
-            sort_by: paginated.meta.sort_by ?? "id",
+            sort_by: paginated.meta.sort_by ?? null,
             descending: paginated.meta.descending ?? false,
         };
     }
@@ -137,7 +137,7 @@ export const getPaginationMeta = (
         next_page_url,
         prev_page_url,
         //custom
-        sort_by: sort_by ?? "id",
+        sort_by: sort_by ?? null,
         descending: descending ?? false,
     };
 };

@@ -97,4 +97,36 @@ describe("useDataTable history", () => {
             expect.objectContaining({ replace: true }),
         );
     });
+
+    it("keeps a nullable sort state when no backend sort is applied", () => {
+        inertia.props = {
+            users: {
+                data: [],
+                current_page: 1,
+                last_page: 1,
+                per_page: 10,
+                total: 0,
+                from: null,
+                to: null,
+                path: "/users",
+                links: [],
+                first_page_url: null,
+                last_page_url: null,
+                next_page_url: null,
+                prev_page_url: null,
+                sort_by: null,
+                descending: false,
+            },
+        };
+
+        const table = useDataTable("users", { useUrlQuery: true });
+
+        table.reload();
+
+        expect(inertia.reload).toHaveBeenCalledWith(
+            expect.objectContaining({
+                data: expect.objectContaining({ sort_by: null }),
+            }),
+        );
+    });
 });
