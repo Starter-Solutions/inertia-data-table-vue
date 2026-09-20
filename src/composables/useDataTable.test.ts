@@ -49,6 +49,19 @@ describe("useDataTable additional data", () => {
 
         expect(table.getAdditional("filters.statuses", [])).toEqual(["active"]);
     });
+
+    it("returns the allowed backend sort columns", () => {
+        inertia.props = {
+            users: {
+                data: [],
+                allowed_sorts: ["id", "name"],
+            },
+        };
+
+        const table = useDataTable("users", { useUrlQuery: true });
+
+        expect(table.allowedSorts.value).toEqual(["id", "name"]);
+    });
 });
 
 describe("useDataTable history", () => {

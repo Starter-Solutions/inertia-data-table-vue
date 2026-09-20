@@ -77,6 +77,7 @@ export const getPaginationMeta = (
             //custom
             sort_by: "id",
             descending: false,
+            allowed_sorts: [],
         };
     }
 
@@ -99,6 +100,7 @@ export const getPaginationMeta = (
             //custom
             sort_by: paginated.meta.sort_by ?? null,
             descending: paginated.meta.descending ?? false,
+            allowed_sorts: paginated.meta.allowed_sorts ?? [],
         };
     }
 
@@ -120,6 +122,7 @@ export const getPaginationMeta = (
         //custom
         sort_by,
         descending,
+        allowed_sorts,
     } = paginated as PaginatedFlat<unknown>;
 
     return {
@@ -139,5 +142,6 @@ export const getPaginationMeta = (
         //custom
         sort_by: sort_by ?? null,
         descending: descending ?? false,
+        allowed_sorts: allowed_sorts ?? [],
     };
 };
