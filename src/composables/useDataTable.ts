@@ -96,6 +96,11 @@ export const useDataTable = <T>(
         reload({ per_page: perPage, page: 1 });
     };
 
+    // Sorting
+    const allowedSorts = computed<Array<string>>(
+        () => pagination.value.allowed_sorts ?? [],
+    );
+
     const sortBy = (sort_by: string, descending?: boolean) => {
         const newDescending =
             (descending ?? pagination.value.sort_by === sort_by)
@@ -168,6 +173,8 @@ export const useDataTable = <T>(
         lastPage,
         goToPage,
         itemsPerPage,
+
+        allowedSorts,
         sortBy,
 
         filter,

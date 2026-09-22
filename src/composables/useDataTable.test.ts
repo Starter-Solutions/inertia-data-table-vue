@@ -49,6 +49,19 @@ describe("useDataTable additional data", () => {
 
         expect(table.getAdditional("filters.statuses", [])).toEqual(["active"]);
     });
+
+    it("returns the allowed backend sort columns", () => {
+        inertia.props = {
+            users: {
+                data: [],
+                allowed_sorts: ["id", "name"],
+            },
+        };
+
+        const table = useDataTable("users", { useUrlQuery: true });
+
+        expect(table.allowedSorts.value).toEqual(["id", "name"]);
+    });
 });
 
 describe("useDataTable history", () => {
@@ -95,6 +108,38 @@ describe("useDataTable history", () => {
             "/set",
             expect.any(Object),
             expect.objectContaining({ replace: true }),
+        );
+    });
+
+    it("keeps a nullable sort state when no backend sort is applied", () => {
+        inertia.props = {
+            users: {
+                data: [],
+                current_page: 1,
+                last_page: 1,
+                per_page: 10,
+                total: 0,
+                from: null,
+                to: null,
+                path: "/users",
+                links: [],
+                first_page_url: null,
+                last_page_url: null,
+                next_page_url: null,
+                prev_page_url: null,
+                sort_by: null,
+                descending: false,
+            },
+        };
+
+        const table = useDataTable("users", { useUrlQuery: true });
+
+        table.reload();
+
+        expect(inertia.reload).toHaveBeenCalledWith(
+            expect.objectContaining({
+                data: expect.objectContaining({ sort_by: null }),
+            }),
         );
     });
 });
