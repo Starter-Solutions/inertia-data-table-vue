@@ -32,6 +32,25 @@ Together they provide a clean, consistent way to manage paginated and sortable d
 npm install @starter-solutions/inertia-data-table-vue
 ```
 
+## Sortable columns
+
+`useDataTable()` exposes the backend's `allowed_sorts` as both the reactive `allowedSorts` list and an `isSortable(key)` helper:
+
+```vue
+<script setup>
+const { isSortable, sortBy } = useDataTable('users');
+</script>
+
+<template>
+    <button
+        :disabled="!isSortable(column.key)"
+        @click="sortBy(column.key)"
+    >
+        {{ column.label }}
+    </button>
+</template>
+```
+
 ## 🐛 Issues & Support
 
 Bug reports and feature requests should be submitted to the main repository:

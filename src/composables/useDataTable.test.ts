@@ -61,6 +61,8 @@ describe("useDataTable additional data", () => {
         const table = useDataTable("users", { useUrlQuery: true });
 
         expect(table.allowedSorts.value).toEqual(["id", "name"]);
+        expect(table.isSortable("name")).toBe(true);
+        expect(table.isSortable("email")).toBe(false);
     });
 });
 

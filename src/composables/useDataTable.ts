@@ -101,6 +101,9 @@ export const useDataTable = <T>(
         () => pagination.value.allowed_sorts ?? [],
     );
 
+    const isSortable = (key: string): boolean =>
+        allowedSorts.value.includes(key);
+
     const sortBy = (sort_by: string, descending?: boolean) => {
         const newDescending =
             (descending ?? pagination.value.sort_by === sort_by)
@@ -175,6 +178,7 @@ export const useDataTable = <T>(
         itemsPerPage,
 
         allowedSorts,
+        isSortable,
         sortBy,
 
         filter,
