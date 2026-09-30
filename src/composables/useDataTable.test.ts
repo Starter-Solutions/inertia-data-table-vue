@@ -64,6 +64,32 @@ describe("useDataTable additional data", () => {
         expect(table.isSortable("name")).toBe(true);
         expect(table.isSortable("email")).toBe(false);
     });
+
+    it("treats null allowed sorts as unrestricted and an empty list as disabled", () => {
+        inertia.props = {
+            users: {
+                data: [],
+                allowed_sorts: null,
+            },
+        };
+
+        const unrestricted = useDataTable("users", { useUrlQuery: true });
+
+        expect(unrestricted.allowedSorts.value).toBeNull();
+        expect(unrestricted.isSortable("any_column")).toBe(true);
+
+        inertia.props = {
+            users: {
+                data: [],
+                allowed_sorts: [],
+            },
+        };
+
+        const disabled = useDataTable("users", { useUrlQuery: true });
+
+        expect(disabled.allowedSorts.value).toEqual([]);
+        expect(disabled.isSortable("id")).toBe(false);
+    });
 });
 
 describe("useDataTable history", () => {
@@ -141,6 +167,56 @@ describe("useDataTable history", () => {
         expect(inertia.reload).toHaveBeenCalledWith(
             expect.objectContaining({
                 data: expect.objectContaining({ sort_by: null }),
+            }),
+        );
+    });
+});
+
+describe("useDataTable sorting", () => {
+    beforeEach(() => {
+        inertia.props = {
+            users: {
+                data: [],
+                sort_by: "name",
+                descending: true,
+                allowed_sorts: ["name"],
+            },
+        };
+        vi.clearAllMocks();
+    });
+
+    it("preserves an explicitly false descending value", () => {
+        const table = useDataTable("users", { useUrlQuery: true });
+
+        table.sortBy("name", false);
+
+        expect(inertia.reload).toHaveBeenCalledWith(
+            expect.objectContaining({
+                data: expect.objectContaining({ descending: false }),
+            }),
+        );
+    });
+
+    it("preserves an explicitly true descending value", () => {
+        const table = useDataTable("users", { useUrlQuery: true });
+
+        table.sortBy("name", true);
+
+        expect(inertia.reload).toHaveBeenCalledWith(
+            expect.objectContaining({
+                data: expect.objectContaining({ descending: true }),
+            }),
+        );
+    });
+
+    it("toggles the current column when descending is omitted", () => {
+        const table = useDataTable("users", { useUrlQuery: true });
+
+        table.sortBy("name");
+
+        expect(inertia.reload).toHaveBeenCalledWith(
+            expect.objectContaining({
+                data: expect.objectContaining({ descending: false }),
             }),
         );
     });

@@ -51,6 +51,8 @@ const { isSortable, sortBy } = useDataTable('users');
 </template>
 ```
 
+The backend states are preserved: `null` means unrestricted, `[]` disables all sort buttons, and a non-empty list enables only the listed keys.
+
 ## 🐛 Issues & Support
 
 Bug reports and feature requests should be submitted to the main repository:

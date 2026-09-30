@@ -22,7 +22,7 @@ export type NormalizedPagination = {
     //custom
     sort_by?: string | null;
     descending?: boolean;
-    allowed_sorts?: string[];
+    allowed_sorts?: string[] | null;
 };
 
 // For JsonResource collection wrapping
