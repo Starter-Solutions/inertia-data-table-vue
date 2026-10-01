@@ -97,15 +97,19 @@ export const useDataTable = <T>(
     };
 
     // Sorting
-    const allowedSorts = computed<Array<string>>(
-        () => pagination.value.allowed_sorts ?? [],
+    const allowedSorts = computed<Array<string> | null>(
+        () => pagination.value.allowed_sorts,
     );
+
+    const isSortable = (key: string): boolean =>
+        allowedSorts.value === null || allowedSorts.value.includes(key);
 
     const sortBy = (sort_by: string, descending?: boolean) => {
         const newDescending =
-            (descending ?? pagination.value.sort_by === sort_by)
+            descending
+            ?? (pagination.value.sort_by === sort_by
                 ? !pagination.value.descending
-                : false;
+                : false);
 
         reload({ sort_by, descending: newDescending });
     };
@@ -175,6 +179,7 @@ export const useDataTable = <T>(
         itemsPerPage,
 
         allowedSorts,
+        isSortable,
         sortBy,
 
         filter,
